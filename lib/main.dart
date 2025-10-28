@@ -95,12 +95,6 @@ class MovieListScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-
-                // ⚙️ ICONO A LA DERECHA
-                IconButton(
-                  icon: const Icon(Icons.settings, color: Colors.blueAccent),
-                  onPressed: () {},
-                ),
               ],
             ),
           );
