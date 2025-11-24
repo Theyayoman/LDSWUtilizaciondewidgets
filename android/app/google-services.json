@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "73858106642",
+    "project_id": "peliculas-f54d2",
+    "storage_bucket": "peliculas-f54d2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:73858106642:android:eee2a31c269c6932e45fcb",
+        "android_client_info": {
+          "package_name": "com.example.flutter_application_1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDkpZ5fDZKae0QANiQ_Cmeep0tLVS1qSU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

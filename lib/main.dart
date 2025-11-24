@@ -1,8 +1,18 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart'; // archivo generado por flutterfire configure
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  //INICIALIZACIÓN DE FIREBASE
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  print("🔥 Firebase inicializado correctamente");
+
   runApp(const MyApp());
 }
 
@@ -14,7 +24,78 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Director's Fav",
-      home: MovieListScreen(),
+      home: WelcomeScreen(),
+    );
+  }
+}
+
+class WelcomeScreen extends StatelessWidget {
+  const WelcomeScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Stack(
+        children: [
+          //Imagen de fondo
+          Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/fondo.jpg'),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+
+          //Contenido centrado
+          Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(Icons.movie, size: 100, color: Colors.white),
+                const SizedBox(height: 20),
+                const Text(
+                  '¡Bienvenido!',
+                  style: TextStyle(
+                    fontSize: 30,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                const Text(
+                  "Director's Fav 🎬",
+                  style: TextStyle(
+                    fontSize: 22,
+                    color: Colors.white70,
+                  ),
+                ),
+                const SizedBox(height: 30),
+
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.indigo,
+                    padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 12),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(25),
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const MovieListScreen()),
+                    );
+                  },
+                  child: const Text(
+                    'Entrar a la app',
+                    style: TextStyle(fontSize: 18, color: Colors.white),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -30,10 +111,9 @@ class _MovieListScreenState extends State<MovieListScreen> {
   Map<String, dynamic>? weatherData;
   bool loadingWeather = true;
 
-  // --- Obtener clima desde OpenWeather ---
   Future<void> loadWeather() async {
     const String apiKey = "776760c6173cf6fe80ee8e77ac569015";
-    const String city = "Guadalajara"; // puedes cambiarla
+    const String city = "Guadalajara";
 
     final url = Uri.parse(
       "https://api.openweathermap.org/data/2.5/weather?q=$city&units=metric&lang=es&appid=$apiKey",
@@ -56,7 +136,7 @@ class _MovieListScreenState extends State<MovieListScreen> {
   @override
   void initState() {
     super.initState();
-    loadWeather(); // cargar clima al iniciar
+    loadWeather();
   }
 
   @override
@@ -137,8 +217,7 @@ class _MovieListScreenState extends State<MovieListScreen> {
               itemCount: 6,
               itemBuilder: (context, index) {
                 return Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -149,8 +228,7 @@ class _MovieListScreenState extends State<MovieListScreen> {
                           color: Colors.grey.shade300,
                           borderRadius: BorderRadius.circular(8),
                         ),
-                        child: const Icon(Icons.image,
-                            size: 40, color: Colors.grey),
+                        child: const Icon(Icons.image, size: 40, color: Colors.grey),
                       ),
                       const SizedBox(width: 12),
                       Expanded(
